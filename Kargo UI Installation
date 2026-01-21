@@ -31,8 +31,15 @@ helm install cert-manager cert-manager \
   --set api.adminAccount.tokenSigningKey='BCRYPT_ACCOUNT_TOKEN' \
   --wait
 
+   You have to disable the tls for testing purpose in helm values.yaml
+  tls:
+   enabled: false
+   selfSignedCert: true
+
 
    NOW ADD ALL OTHER FILES SUCH AS ENVOY-CONFIG MAP, ENVOY-DEPLOYMENT, ENVOY-SERVICE FILE AS U CAN SEE IN THE OTHER FILES
+
+
 
      
 
