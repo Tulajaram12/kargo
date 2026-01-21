@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kargo-envoy
+  namespace: kargo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kargo-envoy
+  template:
+    metadata:
+      labels:
+        app: kargo-envoy
+    spec:
+      containers:
+      - name: envoy
+        image: envoyproxy/envoy:v1.37.0
+        args:
+          - "-c"
+          - "/etc/envoy/envoy.yaml"
+          - "--log-level"
+          - "info"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: envoy-config
+          mountPath: /etc/envoy
+      volumes:
+      - name: envoy-config
+        configMap:
+          name: envoy-config
