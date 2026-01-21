@@ -1,0 +1,41 @@
+KARGO INSTALLATION
+
+1.Install the Cert Manager by using Below Command
+helm install cert-manager cert-manager \
+  --repo https://charts.jetstack.io \
+  --version 1.14.5 \
+  --namespace cert-manager \
+  --create-namespace \
+  --set installCRDs=true \
+  --wait
+
+
+2.Installation of kargo
+   Install htpasswd
+     sudo apt update -y
+     sudo apt install apache2-utils -y
+
+   Use below Command to set your custom admin password i.e bcrypt format
+     htpasswd -nbBC 10 "" admin123 | tr -d ':\n'
+   Use below Command to generate the account token
+     openssl rand -hex 32
+
+   Now install kargo by using below command
+   helm install kargo \
+  oci://ghcr.io/akuity/kargo-charts/kargo \
+  --version 1.0.4 \
+  --namespace kargo \
+  --create-namespace \
+  --set api.service.type=ClusterIP \
+  --set api.adminAccount.passwordHash='BCRYPT_GENERATED_PASSWORD' \
+  --set api.adminAccount.tokenSigningKey='BCRYPT_ACCOUNT_TOKEN' \
+  --wait
+
+
+   NOW ADD ALL OTHER FILES SUCH AS ENVOY-CONFIG MAP, ENVOY-DEPLOYMENT, ENVOY-SERVICE FILE AS U CAN SEE IN THE OTHER FILES
+
+     
+
+
+
+
