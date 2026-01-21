@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kargo-envoy
+  namespace: kargo
+spec:
+  selector:
+    app: kargo-envoy
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
